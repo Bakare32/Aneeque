@@ -19,36 +19,66 @@ class ExploreCollectionViewCell: UICollectionViewCell {
       nameLabel.text = title
       let time = card.time
       timeLabel.text = time
+        let message = card.message
+        messageLabel.text = message
+        let price = card.price
+        priceLabel.text = price
+        let color = UIColor(red: 0.102, green: 0.125, blue: 0.173, alpha: 1)
+        let attributedText = NSMutableAttributedString(string: card.title,
+                                                       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium), NSAttributedString.Key.foregroundColor: color])
+        let attributedText2 = NSMutableAttributedString(string: card.time,
+                                                       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 9, weight: .medium), NSAttributedString.Key.foregroundColor: color])
+        let attributedText3 = NSMutableAttributedString(string: card.message,
+                                                       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium), NSAttributedString.Key.foregroundColor: color])
+        nameLabel.attributedText = attributedText
+        timeLabel.attributedText = attributedText2
+        messageLabel.attributedText = attributedText3
     }
   }
   // MARK: - NAME LABEL TO DISPLAY THE NAME
   lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-//    label.font = UIFont(name: AppFonts.nunitoSansSemiBold.font, size: 25)
     label.numberOfLines = 1
     return label
   }()
+    lazy var messageLabel: UILabel = {
+      let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.numberOfLines = 2
+      return label
+    }()
   // MARK: - TIME LABEL TO DISPLAY THE TIME
   lazy var timeLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    // label.text = "20 mins"
-//    label.font = UIFont(name: AppFonts.nunitoSansRegular.font, size: 13)
+    label.font = UIFont(name: "NunitoSans-Bold", size: 5)
     label.numberOfLines = 1
     return label
   }()
+    lazy var priceLabel: UILabel = {
+      let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.font = UIFont(name: "NunitoSans-Bold", size: 5)
+      label.numberOfLines = 1
+      return label
+    }()
   // MARK: - IMAGE LABEL
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
+    imageView.layer.cornerRadius = 40
+//    imageView.backgroundColor = .red
+    imageView.layer.masksToBounds = true
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }()
   // MARK: - NEXT BUTTON LABEL
   lazy var nextButtonIcon: UIButton = {
     let button = UIButton()
-    button.setImage(UIImage(named: "Button"), for: .normal)
+    button.setTitle("Buy", for: .normal)
+    button.backgroundColor = .black
+    button.layer.cornerRadius = 15
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
@@ -63,16 +93,29 @@ class ExploreCollectionViewCell: UICollectionViewCell {
     addSubview(timeLabel)
     addSubview(imageView)
     addSubview(nextButtonIcon)
-    nameLabel.anchorWithConstantsToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 37, leftConstant: 45, bottomConstant: 106, rightConstant: -147)
-    timeLabel.anchorWithConstantsToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 90, leftConstant: 45, bottomConstant: 86, rightConstant: -253)
+    addSubview(priceLabel)
+    addSubview(messageLabel)
     NSLayoutConstraint.activate([
-      nextButtonIcon.bottomAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 60),
-      nextButtonIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 45),
-      nextButtonIcon.heightAnchor.constraint(equalToConstant: 50),
-      nextButtonIcon.widthAnchor.constraint(equalToConstant: 50),
-      imageView.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 50),
-      imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-      imageView.heightAnchor.constraint(equalToConstant: 5)
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+        imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+        imageView.heightAnchor.constraint(equalToConstant: 190),
+        imageView.widthAnchor.constraint(equalToConstant: 190),
+        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 40),
+        nameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
+        nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
+        timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+        timeLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
+        timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
+        messageLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 30),
+        messageLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
+        priceLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 60),
+        priceLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
+        nextButtonIcon.leadingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: 20),
+        nextButtonIcon.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 50),
+        nextButtonIcon.heightAnchor.constraint(equalToConstant: 40),
+        nextButtonIcon.widthAnchor.constraint(equalToConstant: 70),
+        
     ])
   }
   required init?(coder: NSCoder) {

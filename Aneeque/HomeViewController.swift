@@ -9,20 +9,20 @@ import UIKit
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let cards: [Card] = {
-      let firstCard = Card(title: "Irun Chair", time: "20 mins", imageName: "waris")
-      let secondCard = Card(title: "Irun Chair", time: "35 mins", imageName: "table")
-      let thirdCard = Card(title: "Hello", time: "15 mins", imageName: "Illustration2")
+        let firstCard = Card(title: "Irun Chair", time: "By Seto", imageName: "another1", message: "Ergonmical for humans \n body curve.", price: "$120.00")
+        let secondCard = Card(title: "Malik Chair", time: "By Karjo", imageName: "another2", message: "Extra comfy chair with a \n palm rest", price: "$221.00")
+        let thirdCard = Card(title: "Seto Chair", time: "By Waris", imageName: "another3", message: "Ergonmical for humans \n body curve.", price: "$221.00")
       return [firstCard, secondCard, thirdCard]
     }()
     
     lazy var collectionView: UICollectionView = {
       let layout = UICollectionViewFlowLayout()
       layout.scrollDirection = .vertical
-      layout.minimumLineSpacing = 20
+      layout.minimumLineSpacing = 45
       let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
       collectionView.dataSource = self
       collectionView.delegate = self
-        collectionView.backgroundColor =  .white
+        collectionView.backgroundColor =  UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00)
       collectionView.showsVerticalScrollIndicator = false
       collectionView.translatesAutoresizingMaskIntoConstraints = false
       return collectionView
@@ -47,11 +47,22 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
       label.numberOfLines = 1
       return label
     }()
+    private var titleLabel: UILabel = {
+      let label = UILabel()
+      label.text = "Best Furniture"
+        label.textColor = UIColor(red: 0.2588, green: 0.2667, blue: 0.3098, alpha: 1.0)
+      label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 28)
+      label.numberOfLines = 1
+      return label
+    }()
+
     private let signButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(red: 0.7647, green: 0.7686, blue: 0.7882, alpha: 1.0)
+        button.backgroundColor = .white
         button.setBackgroundImage(UIImage(systemName: "list.bullet.rectangle"), for: .normal)
         button.layer.cornerRadius = 16
+        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -123,7 +134,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     let cellId = "cellId"
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Best Furniture"
+        title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
         view.backgroundColor = .white
@@ -131,20 +142,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView.register(ExploreCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
     }
 
-//    func setupScrollView() {
-//      view.addSubview(scrollView)
-//      scrollView.addSubview(contentView)
-//      scrollView.contentSize = CGSize(width: view.frame.size.width, height: 1000)
-//      scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//      scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-//      scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
-//      scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//      contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-//      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-//      contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-//      contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-//    }
     func setUpView() {
+        view.addSubview(titleLabel)
         view.addSubview(messageLabel)
         view.addSubview(searchTextField)
         view.addSubview(signButton)
@@ -159,11 +158,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func setUpConstraint() {
         setUpView()
-//        setupScrollView()
         collectionView.anchorWithConstantsToTop(top: allButton.topAnchor,
-                                                left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 90, leftConstant: 30, bottomConstant: 80, rightConstant: 30)
+                                                left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 70, leftConstant: 0, bottomConstant: 70, rightConstant: 0)
         NSLayoutConstraint.activate([
-            messageLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             searchTextField.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 20),
             searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -207,12 +207,15 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? ExploreCollectionViewCell else { return UICollectionViewCell() }
         cell.layer.cornerRadius = 60
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.white.cgColor
+//        cell.backgroundColor = .red
         let page = cards[indexPath.row]
         cell.card = page
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-      return CGSize(width: view.frame.width, height: 200)
+      return CGSize(width: view.frame.width, height: 250)
     }
     
 }

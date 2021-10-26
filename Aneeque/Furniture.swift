@@ -11,4 +11,6 @@ struct Card {
     let title: String
     let time: String
     let imageName: String
+    let message: String
+    let price: String
 }
