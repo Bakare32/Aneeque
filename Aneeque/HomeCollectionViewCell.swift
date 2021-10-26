@@ -52,14 +52,12 @@ class ExploreCollectionViewCell: UICollectionViewCell {
   lazy var timeLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont(name: "NunitoSans-Bold", size: 5)
     label.numberOfLines = 1
     return label
   }()
     lazy var priceLabel: UILabel = {
       let label = UILabel()
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.font = UIFont(name: "NunitoSans-Bold", size: 5)
       label.numberOfLines = 1
       return label
     }()

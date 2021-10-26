@@ -209,11 +209,18 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         cell.layer.cornerRadius = 60
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor.white.cgColor
-//        cell.backgroundColor = .red
         let page = cards[indexPath.row]
         cell.card = page
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cellItem = cards[indexPath.row]
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let vc = DetailsViewController()
+        navigationController?.pushViewController(vc, animated: true)
+        vc.imageView.image = UIImage(named: cellItem.imageName)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
       return CGSize(width: view.frame.width, height: 250)
     }
