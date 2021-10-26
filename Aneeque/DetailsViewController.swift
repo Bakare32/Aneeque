@@ -21,6 +21,7 @@ class DetailsViewController: UIViewController {
         customButton2.tintColor = .black
         customButton2.backgroundColor = .white
         customButton2.layer.cornerRadius = 12
+        customButton2.addTarget(self, action: #selector(goToHomeController), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: customButton2)
     }
     
@@ -36,7 +37,6 @@ class DetailsViewController: UIViewController {
     
     let detailView: UIView = {
       let view = UIView()
-//        view.backgroundColor = .red
         view.layer.cornerRadius = 55
         let preferenceLabel: UILabel = {
         let label = UILabel()
@@ -45,30 +45,64 @@ class DetailsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
         }()
-//      let preferenceImage: UIImageView = {
-//        let imageView = UIImageView.makeSettingsImage()
-//        imageView.image = AppButtonImages.preferences.image
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//      }()
-//      let preferenceLabel: UILabel = {
-//        let label = UILabel.makeSettingslabel()
-//        label.text = "Preferences"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//      }()
-//      let preferenceButton: UIButton = {
-//        let button = UIButton.makeSettingsButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//  //      button.addTarget(self, action: #selector(goToPreferenceScreen), for: .touchUpInside)
-//        return button
-//      }()
-//      view.addSubview(preferenceImage)
+        let detailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "By Seto"
+            label.textColor = UIColor(red: 0.102, green: 0.125, blue: 0.173, alpha: 1)
+       label.font = UIFont.systemFont(ofSize: 9, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+        }()
+        
+        let messagelabel: UILabel = {
+        let label = UILabel()
+        label.text = "Crafted with a perfect construction by Seto Febraint and have a balancing ergonomic for humans body. top quality leather in the back of the rest."
+        label.textColor = UIColor(red: 0.102, green: 0.125, blue: 0.173, alpha: 1)
+       label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 4
+        return label
+        }()
+        
+        let priceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "$122.00"
+            label.textColor = UIColor(red: 0.102, green: 0.125, blue: 0.173, alpha: 1)
+       label.font = UIFont.systemFont(ofSize: 25, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+        }()
+        
+        let payButton: UIButton = {
+          let button = UIButton()
+          button.setTitle("Buy Now", for: .normal)
+          button.backgroundColor = UIColor(red: 0.7686, green: 0.2275, blue: 0, alpha: 1.0)
+          button.layer.cornerRadius = 19
+          button.translatesAutoresizingMaskIntoConstraints = false
+          return button
+        }()
+
       view.addSubview(preferenceLabel)
-//      view.addSubview(preferenceButton)
+        view.addSubview(detailLabel)
+      view.addSubview(messagelabel)
+        view.addSubview(priceLabel)
+        view.addSubview(payButton)
         NSLayoutConstraint.activate([
             preferenceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             preferenceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            detailLabel.topAnchor.constraint(equalTo: preferenceLabel.bottomAnchor, constant: 5),
+            detailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            messagelabel.topAnchor.constraint(equalTo: detailLabel.bottomAnchor, constant: 30),
+            messagelabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            messagelabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            messagelabel.heightAnchor.constraint(equalToConstant: 72),
+            priceLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            priceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            priceLabel.heightAnchor.constraint(equalToConstant: 60),
+            payButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            payButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            payButton.heightAnchor.constraint(equalToConstant: 60),
+            payButton.widthAnchor.constraint(equalToConstant: 120),
         ])
       view.translatesAutoresizingMaskIntoConstraints = false
       return view
@@ -81,6 +115,9 @@ class DetailsViewController: UIViewController {
         setUpViews()
     }
     
+    @objc func goToHomeController() {
+        navigationController?.popViewController(animated: true)
+    }
     
     func setUpViews() {
         view.addSubview(imageView)
